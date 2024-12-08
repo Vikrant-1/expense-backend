@@ -36,11 +36,30 @@ export const writeDocument = async (
 ) => {
   try {
     const docRef = db.doc(path);
-    await docRef.set(data, { merge: true });
+    await docRef.set(data, { merge: false });
     console.log(`Document written to path: ${path}`);
   } catch (error) {
     console.error("Error writing document:", error);
     throw error;
+  }
+};
+
+/**
+ * Update data to firestore
+ * @param path - The path of document.
+ * @param data - The dataFields to update in document.
+ */
+
+export const updateDocument = async (
+  path: string,
+  data: Record<string, any>
+) => {
+  try {
+    const docRef = db.doc(path);
+    await docRef.update(data);
+  } catch (error) {
+    console.error("Error updating document:", error);
+    throw new Error(`Failed to update document at path: ${path}`);
   }
 };
 
@@ -79,3 +98,7 @@ export const readCollection = async (collectionPath: string) => {
     throw error;
   }
 };
+
+
+
+export const getSpaceId = () => db.collection('spaces').id;
