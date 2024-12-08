@@ -16,5 +16,6 @@ export const MESSAGE = {
   //spaces
   INVALID_SPACE_TYPE: "Invalid space type. Choose 'personal' or 'business'.",
   SPACE_CREATED: "Space created successfully.",
+  SPACE_UPDATED: "Space updated successfully.",
   SPACE_CREATION_FAILED: "Failed to create space.",
 };
