@@ -16,7 +16,7 @@ import {generateSuccessResponse} from "../utils/successHandler";
 
 const createUserController = async (req: Request, res: Response) => {
   try {
-    const {data: {name, email, avatar, isVerified} = {}, userId} = req.body;
+    const {data: {name="", email="", avatar="", isVerified=false} = {}, userId=""} = req.body;
 
     // if user exist throw error
     const user = await readDocument(userPath(userId));
@@ -106,7 +106,7 @@ const deleteUserController = async (req: Request, res: Response) => {
 
 const onBoardingDetailController = async (req: Request, res: Response) => {
   try {
-    const {data: {spaceType} = {}, userId} = req.body;
+    const {data: {spaceType=""} = {}, userId=""} = req.body;
 
     // check for userId and spaceType
     if (
