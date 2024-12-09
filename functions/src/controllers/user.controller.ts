@@ -118,7 +118,7 @@ const onBoardingDetailController = async (req: Request, res: Response) => {
     const spaceId = getSpaceId();
     const spaceData = {
       id: spaceId,
-      role:"admin",
+      role: "admin",
       spaceType: spaceType,
       name: DEFAULT_SPACE_NAME[spaceType as SpaceType],
       createdBy: getCreatedBy(userId),

@@ -1,28 +1,28 @@
-import { Request, Response } from "express";
-import { generateErrorResponse } from "../utils/errorHandler";
-import { MESSAGE } from "../constants/responseMessage.constants";
+import {Request, Response} from "express";
+import {generateErrorResponse} from "../utils/errorHandler";
+import {MESSAGE} from "../constants/responseMessage.constants";
 import {
   deleteDocument,
   getSpaceId,
   updateDocument,
   writeDocument,
 } from "../utils/firebaseUtils";
-import { SpaceType } from "../types/space.types";
+import {SpaceType} from "../types/space.types";
 import {
   spacePath,
   userPath,
   userSpacePath,
 } from "../constants/firebasePath.constants";
-import { firestore } from "firebase-admin";
+import {firestore} from "firebase-admin";
 
 const createSpaceController = async (req: Request, res: Response) => {
   try {
-    const { data: { name, spaceType, avatar } = {}, userId } = req.body;
+    const {data: {name, spaceType, avatar} = {}, userId} = req.body;
 
     if (!name || !spaceType || !avatar) {
       res
         .status(404)
-        .json(generateErrorResponse({ message: MESSAGE.MISSING_DATA }));
+        .json(generateErrorResponse({message: MESSAGE.MISSING_DATA}));
       return;
     }
 
@@ -33,7 +33,7 @@ const createSpaceController = async (req: Request, res: Response) => {
       name: name,
       spaceType: spaceType as SpaceType,
       avatar: avatar || null,
-      role:"admin",
+      role: "admin",
       createdBy: getCreatedBy(userId),
     };
     // create space
@@ -59,19 +59,19 @@ const createSpaceController = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(generateErrorResponse({ message: MESSAGE.SPACE_CREATION_FAILED }));
+      .json(generateErrorResponse({message: MESSAGE.SPACE_CREATION_FAILED}));
   }
 };
 
 const updateSpaceController = async (req: Request, res: Response) => {
   try {
-    const { data: { name, spaceType, avatar } = {}, userId } = req.body;
-    const { spaceId } = req.params;
+    const {data: {name, spaceType, avatar} = {}, userId} = req.body;
+    const {spaceId} = req.params;
 
     if (!name && !spaceType && !avatar) {
       res
         .status(404)
-        .json(generateErrorResponse({ message: MESSAGE.MISSING_DATA }));
+        .json(generateErrorResponse({message: MESSAGE.MISSING_DATA}));
       return;
     }
 
@@ -101,20 +101,20 @@ const updateSpaceController = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(generateErrorResponse({ message: MESSAGE.SPACE_CREATION_FAILED }));
+      .json(generateErrorResponse({message: MESSAGE.SPACE_CREATION_FAILED}));
   }
 };
 
 const deleteSpaceController = async (req: Request, res: Response) => {
   try {
-    const { userId, spaceId } = req.params;
+    const {userId, spaceId} = req.params;
 
     await deleteDocument(spacePath(spaceId));
     await deleteDocument(userSpacePath(userId, spaceId));
   } catch (error) {
     res
       .status(500)
-      .json(generateErrorResponse({ message: MESSAGE.SPACE_CREATION_FAILED }));
+      .json(generateErrorResponse({message: MESSAGE.SPACE_CREATION_FAILED}));
   }
 };
 

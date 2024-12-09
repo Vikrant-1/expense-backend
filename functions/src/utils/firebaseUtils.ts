@@ -4,11 +4,6 @@ import * as admin from "firebase-admin";
 admin.initializeApp();
 const db = admin.firestore();
 
-/**
- * Read data from Firestore
- * @param path - The path of the document or collection
- * @return Document data or null if not found
- */
 export const readDocument = async (path: string) => {
   try {
     const docRef = db.doc(path);
@@ -25,30 +20,19 @@ export const readDocument = async (path: string) => {
   }
 };
 
-/**
- * Write data to Firestore
- * @param path - The path of the document.
- * @param data - The data to write to the document.
- */
 export const writeDocument = async (
   path: string,
   data: Record<string, any>
 ) => {
   try {
     const docRef = db.doc(path);
-    await docRef.set(data, {merge: false});
+    await docRef.set(data, { merge: false });
     console.log(`Document written to path: ${path}`);
   } catch (error) {
     console.error("Error writing document:", error);
     throw error;
   }
 };
-
-/**
- * Update data to firestore
- * @param path - The path of document.
- * @param data - The dataFields to update in document.
- */
 
 export const updateDocument = async (
   path: string,
@@ -63,10 +47,6 @@ export const updateDocument = async (
   }
 };
 
-/**
- * Delete a document from Firestore
- * @param path - The path of the document to delete.
- */
 export const deleteDocument = async (path: string) => {
   try {
     const docRef = db.doc(path);
@@ -78,10 +58,6 @@ export const deleteDocument = async (path: string) => {
   }
 };
 
-/**
- * Read multiple documents from a collection
- * @param collectionPath - The path of the collection.
- */
 export const readCollection = async (collectionPath: string) => {
   try {
     const collectionRef = db.collection(collectionPath);
@@ -98,6 +74,5 @@ export const readCollection = async (collectionPath: string) => {
     throw error;
   }
 };
-
 
 export const getSpaceId = () => db.collection("spaces").id;
