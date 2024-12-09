@@ -26,7 +26,7 @@ export const writeDocument = async (
 ) => {
   try {
     const docRef = db.doc(path);
-    await docRef.set(data, { merge: false });
+    await docRef.set(data, {merge: false});
     console.log(`Document written to path: ${path}`);
   } catch (error) {
     console.error("Error writing document:", error);

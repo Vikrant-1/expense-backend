@@ -23,3 +23,8 @@ const getUpdatedBy = (userId: string, includeTimestamp = true) => {
   }
   return updatedBy;
 };
+
+export {
+  getCreatedBy,
+  getUpdatedBy,
+}

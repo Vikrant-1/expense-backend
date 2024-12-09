@@ -11,6 +11,7 @@ import {MESSAGE} from "../constants/responseMessage.constants";
 import {auth} from "firebase-admin";
 import {SpaceType} from "../types/space.types";
 import {DEFAULT_SPACE_NAME} from "../constants/spaces.constants";
+import { getCreatedBy } from "../utils/comman";
 
 const createUserController = async (req: Request, res: Response) => {
   try {

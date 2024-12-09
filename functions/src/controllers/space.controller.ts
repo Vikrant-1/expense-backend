@@ -14,6 +14,7 @@ import {
   userSpacePath,
 } from "../constants/firebasePath.constants";
 import {firestore} from "firebase-admin";
+import { getCreatedBy } from "../utils/comman";
 
 const createSpaceController = async (req: Request, res: Response) => {
   try {
