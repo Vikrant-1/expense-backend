@@ -13,7 +13,7 @@ export const MESSAGE = {
   USER_CREATED: "User has been successfully created.",
   ONBOARDING_FAILED: "Onboarding process failed.",
 
-  //spaces
+  // spaces
   INVALID_SPACE_TYPE: "Invalid space type. Choose 'personal' or 'business'.",
   SPACE_CREATED: "Space created successfully.",
   SPACE_UPDATED: "Space updated successfully.",

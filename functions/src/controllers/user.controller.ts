@@ -1,27 +1,27 @@
-import { Request, Response } from "express";
-import { generateErrorResponse } from "../utils/errorHandler";
+import {Request, Response} from "express";
+import {generateErrorResponse} from "../utils/errorHandler";
 import {
   getSpaceId,
   readDocument,
   updateDocument,
   writeDocument,
 } from "../utils/firebaseUtils";
-import { spacePath, userPath } from "../constants/firebasePath.constants";
-import { MESSAGE } from "../constants/responseMessage.constants";
-import { auth } from "firebase-admin";
-import { SpaceType } from "../types/space.types";
-import { DEFAULT_SPACE_NAME } from "../constants/spaces.constants";
+import {spacePath, userPath} from "../constants/firebasePath.constants";
+import {MESSAGE} from "../constants/responseMessage.constants";
+import {auth} from "firebase-admin";
+import {SpaceType} from "../types/space.types";
+import {DEFAULT_SPACE_NAME} from "../constants/spaces.constants";
 
 const createUserController = async (req: Request, res: Response) => {
   try {
-    const { data: { name, email, avatar, isVerified } = {}, userId } = req.body;
+    const {data: {name, email, avatar, isVerified} = {}, userId} = req.body;
 
     // if user exist throw error
     const user = await readDocument(userPath(userId));
     if (user && user.id) {
       res
         .status(400)
-        .json(generateErrorResponse({ message: MESSAGE.USER_ALREADY_EXIST }));
+        .json(generateErrorResponse({message: MESSAGE.USER_ALREADY_EXIST}));
       return;
     }
 
@@ -51,7 +51,7 @@ const createUserController = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(generateErrorResponse({ message: MESSAGE.SIGNIN_FAILED }));
+      .json(generateErrorResponse({message: MESSAGE.SIGNIN_FAILED}));
   }
 };
 
@@ -63,7 +63,7 @@ const loginUserController = async (req: Request, res: Response) => {
     if (!user || !user?.id) {
       res
         .status(404)
-        .json(generateErrorResponse({ message: MESSAGE.USER_NOT_FOUND }));
+        .json(generateErrorResponse({message: MESSAGE.USER_NOT_FOUND}));
       return;
     }
 
@@ -78,7 +78,7 @@ const loginUserController = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json(generateErrorResponse({ message: MESSAGE.LOGIN_FAILED }));
+      .json(generateErrorResponse({message: MESSAGE.LOGIN_FAILED}));
   }
 };
 
@@ -87,7 +87,7 @@ const updateUserController = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(200)
-      .json(generateErrorResponse({ message: MESSAGE.SIGNIN_FAILED }));
+      .json(generateErrorResponse({message: MESSAGE.SIGNIN_FAILED}));
   }
 };
 
@@ -96,13 +96,13 @@ const deleteUserController = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(200)
-      .json(generateErrorResponse({ message: MESSAGE.SIGNIN_FAILED }));
+      .json(generateErrorResponse({message: MESSAGE.SIGNIN_FAILED}));
   }
 };
 
 const onBoardingDetailController = async (req: Request, res: Response) => {
   try {
-    const { data: { spaceType } = {}, userId } = req.body;
+    const {data: {spaceType} = {}, userId} = req.body;
 
     // check for userId and spaceType
     if (
@@ -111,13 +111,14 @@ const onBoardingDetailController = async (req: Request, res: Response) => {
     ) {
       res
         .status(400)
-        .json(generateErrorResponse({ message: MESSAGE.MISSING_DATA }));
+        .json(generateErrorResponse({message: MESSAGE.MISSING_DATA}));
       return;
     }
 
     const spaceId = getSpaceId();
     const spaceData = {
       id: spaceId,
+      role:"admin",
       spaceType: spaceType,
       name: DEFAULT_SPACE_NAME[spaceType as SpaceType],
       createdBy: getCreatedBy(userId),
@@ -144,7 +145,7 @@ const onBoardingDetailController = async (req: Request, res: Response) => {
     console.error("Error in onboarding:", error);
     res
       .status(500)
-      .json(generateErrorResponse({ message: MESSAGE.ONBOARDING_FAILED }));
+      .json(generateErrorResponse({message: MESSAGE.ONBOARDING_FAILED}));
   }
 };
 

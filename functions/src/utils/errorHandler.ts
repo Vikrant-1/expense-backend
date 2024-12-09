@@ -1,4 +1,4 @@
-const generateErrorResponse = ({ message }: { message: string }) => {
+const generateErrorResponse = ({message}: { message: string }) => {
   return {
     status: "error",
     messages: [message],

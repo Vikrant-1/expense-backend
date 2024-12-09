@@ -9,7 +9,7 @@ interface UpdatedBy {
 }
 
 const getCreatedBy = (userId: string, includeTimestamp = true) => {
-  const createdBy: CreatedBy = { id: userId };
+  const createdBy: CreatedBy = {id: userId};
   if (includeTimestamp) {
     createdBy["createdAt"] = Date.now();
   }
@@ -17,7 +17,7 @@ const getCreatedBy = (userId: string, includeTimestamp = true) => {
 };
 
 const getUpdatedBy = (userId: string, includeTimestamp = true) => {
-  const updatedBy: UpdatedBy = { id: userId };
+  const updatedBy: UpdatedBy = {id: userId};
   if (includeTimestamp) {
     updatedBy["updatedAt"] = Date.now();
   }

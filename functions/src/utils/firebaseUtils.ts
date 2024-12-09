@@ -7,7 +7,7 @@ const db = admin.firestore();
 /**
  * Read data from Firestore
  * @param path - The path of the document or collection
- * @returns Document data or null if not found
+ * @return Document data or null if not found
  */
 export const readDocument = async (path: string) => {
   try {
@@ -36,7 +36,7 @@ export const writeDocument = async (
 ) => {
   try {
     const docRef = db.doc(path);
-    await docRef.set(data, { merge: false });
+    await docRef.set(data, {merge: false});
     console.log(`Document written to path: ${path}`);
   } catch (error) {
     console.error("Error writing document:", error);
@@ -100,5 +100,4 @@ export const readCollection = async (collectionPath: string) => {
 };
 
 
-
-export const getSpaceId = () => db.collection('spaces').id;
+export const getSpaceId = () => db.collection("spaces").id;

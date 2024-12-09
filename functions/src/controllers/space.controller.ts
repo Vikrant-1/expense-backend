@@ -8,13 +8,16 @@ import {
   writeDocument,
 } from "../utils/firebaseUtils";
 import { SpaceType } from "../types/space.types";
-import { spacePath, userPath } from "../constants/firebasePath.constants";
-import { Firestore } from "firebase-admin/firestore";
+import {
+  spacePath,
+  userPath,
+  userSpacePath,
+} from "../constants/firebasePath.constants";
 import { firestore } from "firebase-admin";
 
 const createSpaceController = async (req: Request, res: Response) => {
   try {
-    const { name, spaceType, avatar, userId } = req.body;
+    const { data: { name, spaceType, avatar } = {}, userId } = req.body;
 
     if (!name || !spaceType || !avatar) {
       res
@@ -30,6 +33,7 @@ const createSpaceController = async (req: Request, res: Response) => {
       name: name,
       spaceType: spaceType as SpaceType,
       avatar: avatar || null,
+      role:"admin",
       createdBy: getCreatedBy(userId),
     };
     // create space
@@ -41,9 +45,7 @@ const createSpaceController = async (req: Request, res: Response) => {
       name: name,
       role: "admin",
     };
-    await updateDocument(userPath(userId), {
-      spaces: firestore.FieldValue.arrayUnion(userSpace),
-    });
+    await writeDocument(userSpacePath(userId, spaceId), userSpace);
 
     res.status(201).json(
       generateSuccessResponse({
@@ -63,8 +65,8 @@ const createSpaceController = async (req: Request, res: Response) => {
 
 const updateSpaceController = async (req: Request, res: Response) => {
   try {
-    const { name, spaceType, avatar } = req.body;
-    const { spaceId, userId } = req.params;
+    const { data: { name, spaceType, avatar } = {}, userId } = req.body;
+    const { spaceId } = req.params;
 
     if (!name && !spaceType && !avatar) {
       res
@@ -73,9 +75,9 @@ const updateSpaceController = async (req: Request, res: Response) => {
       return;
     }
 
-    // create space
+    // update space
     await updateDocument(spacePath(spaceId), {
-      ...req.body,
+      ...req.body.data,
     });
 
     // update in user
@@ -105,15 +107,14 @@ const updateSpaceController = async (req: Request, res: Response) => {
 
 const deleteSpaceController = async (req: Request, res: Response) => {
   try {
-    const { userId,spaceId} = req.params;
-    
+    const { userId, spaceId } = req.params;
+
     await deleteDocument(spacePath(spaceId));
-    await updateDocument(userPath(userId),{spaces:firestore.FieldValue.arrayRemove()});
+    await deleteDocument(userSpacePath(userId, spaceId));
   } catch (error) {
     res
-    .status(500)
-    .json(generateErrorResponse({ message: MESSAGE.SPACE_CREATION_FAILED }));
-    
+      .status(500)
+      .json(generateErrorResponse({ message: MESSAGE.SPACE_CREATION_FAILED }));
   }
 };
 

@@ -1,13 +1,13 @@
 const generateSuccessResponse = ({
-    message,  
-    data,   
-  }: {
+  message,
+  data,
+}: {
     message: string;
     data: any;
   }) => {
-    return {
-      status: "success",
-      message: message,
-      data: data,
-    };
+  return {
+    status: "success",
+    message: message,
+    data: data,
   };
+};

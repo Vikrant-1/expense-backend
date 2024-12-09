@@ -1,4 +1,4 @@
-import { SpaceType } from "../types/space.types";
+import {SpaceType} from "../types/space.types";
 
 export const DEFAULT_SPACE_NAME = {
   [SpaceType.BUSINESS]: "Business Space",

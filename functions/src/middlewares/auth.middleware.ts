@@ -1,5 +1,5 @@
-import { Response, NextFunction ,Request} from "express";
-import { auth } from "firebase-admin";
+import {Response, NextFunction, Request} from "express";
+import {auth} from "firebase-admin";
 
 const authenticateUser = async (
   req: Request,
@@ -11,7 +11,7 @@ const authenticateUser = async (
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       res
         .status(401)
-        .json({ message: "Authorization token missing or malformed" });
+        .json({message: "Authorization token missing or malformed"});
       return;
     }
 
@@ -19,7 +19,7 @@ const authenticateUser = async (
     const decodedToken = await auth().verifyIdToken(token);
 
     if (!decodedToken || !decodedToken.uid) {
-      res.status(401).json({ message: "Invalid or expired token" });
+      res.status(401).json({message: "Invalid or expired token"});
       return;
     }
 
@@ -28,8 +28,8 @@ const authenticateUser = async (
     next();
   } catch (error) {
     console.error("Token validation error:", error as typeof Error);
-    res.status(401).json({ message: "Invalid or expired token" });
+    res.status(401).json({message: "Invalid or expired token"});
   }
 };
 
-export { authenticateUser };
+export {authenticateUser};
