@@ -14,10 +14,10 @@ import { DEFAULT_SPACE_NAME } from "../constants/spaces.constants";
 
 const createUserController = async (req: Request, res: Response) => {
   try {
-    const { name, email, avatar, isVerified, id } = req.body;
+    const { data: { name, email, avatar, isVerified } = {}, userId } = req.body;
 
     // if user exist throw error
-    const user = await readDocument(userPath(id));
+    const user = await readDocument(userPath(userId));
     if (user && user.id) {
       res
         .status(400)
@@ -26,9 +26,9 @@ const createUserController = async (req: Request, res: Response) => {
     }
 
     // create user data
-    const providerData = (await auth().getUser(id)).providerData;
+    const providerData = (await auth().getUser(userId)).providerData;
     const data = {
-      id: id,
+      id: userId,
       name: name,
       email: email,
       avatar: avatar,
@@ -37,7 +37,7 @@ const createUserController = async (req: Request, res: Response) => {
     };
 
     // save data in firebase
-    await writeDocument(userPath(id), data);
+    await writeDocument(userPath(userId), data);
 
     // send response
     res.status(201).json(
@@ -57,7 +57,7 @@ const createUserController = async (req: Request, res: Response) => {
 
 const loginUserController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.body;
+    const id = req.body.userId;
     const user = await readDocument(userPath(id));
 
     if (!user || !user?.id) {
@@ -102,7 +102,7 @@ const deleteUserController = async (req: Request, res: Response) => {
 
 const onBoardingDetailController = async (req: Request, res: Response) => {
   try {
-    const { userId, spaceType } = req.body;
+    const { data: { spaceType } = {}, userId } = req.body;
 
     // check for userId and spaceType
     if (
@@ -125,11 +125,11 @@ const onBoardingDetailController = async (req: Request, res: Response) => {
     await writeDocument(spacePath(spaceId), spaceData);
     await updateDocument(userPath(userId), {
       spaceType,
-      spaces: firestore.FieldValue.arrayUnion({
+      [`spaces/${spaceId}`]: {
+        role: "admin",
         id: spaceId,
-        name: spaceData.name,
-        role: "admin", // we will handle roles later
-      }),
+        spaceName: spaceData.name,
+      },
     });
 
     res.status(201).json(
