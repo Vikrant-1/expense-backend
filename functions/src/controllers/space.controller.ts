@@ -14,7 +14,8 @@ import {
   userSpacePath,
 } from "../constants/firebasePath.constants";
 import {firestore} from "firebase-admin";
-import { getCreatedBy } from "../utils/comman";
+import {getCreatedBy} from "../utils/comman";
+import {generateSuccessResponse} from "../utils/successHandler";
 
 const createSpaceController = async (req: Request, res: Response) => {
   try {
@@ -119,7 +120,15 @@ const deleteSpaceController = async (req: Request, res: Response) => {
   }
 };
 
-const getSpaceController = async (req: Request, res: Response) => {};
+const getSpaceController = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(generateSuccessResponse({message: "", data: ""}));
+  } catch (error) {
+    res
+      .status(200)
+      .json(generateErrorResponse({message: MESSAGE.SIGNIN_FAILED}));
+  }
+};
 
 export {
   createSpaceController,

@@ -27,4 +27,4 @@ const getUpdatedBy = (userId: string, includeTimestamp = true) => {
 export {
   getCreatedBy,
   getUpdatedBy,
-}
+};

@@ -11,7 +11,8 @@ import {MESSAGE} from "../constants/responseMessage.constants";
 import {auth} from "firebase-admin";
 import {SpaceType} from "../types/space.types";
 import {DEFAULT_SPACE_NAME} from "../constants/spaces.constants";
-import { getCreatedBy } from "../utils/comman";
+import {getCreatedBy} from "../utils/comman";
+import {generateSuccessResponse} from "../utils/successHandler";
 
 const createUserController = async (req: Request, res: Response) => {
   try {
@@ -85,6 +86,7 @@ const loginUserController = async (req: Request, res: Response) => {
 
 const updateUserController = async (req: Request, res: Response) => {
   try {
+    res.status(200).json(generateSuccessResponse({message: "", data: ""}));
   } catch (error) {
     res
       .status(200)
@@ -94,6 +96,7 @@ const updateUserController = async (req: Request, res: Response) => {
 
 const deleteUserController = async (req: Request, res: Response) => {
   try {
+    res.status(200).json(generateSuccessResponse({message: "", data: ""}));
   } catch (error) {
     res
       .status(200)
