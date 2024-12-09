@@ -8,7 +8,7 @@ import {
 } from "../utils/firebaseUtils";
 import { spacePath, userPath } from "../constants/firebasePath.constants";
 import { MESSAGE } from "../constants/responseMessage.constants";
-import { auth, firestore } from "firebase-admin";
+import { auth } from "firebase-admin";
 import { SpaceType } from "../types/space.types";
 import { DEFAULT_SPACE_NAME } from "../constants/spaces.constants";
 
