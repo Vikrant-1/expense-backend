@@ -8,7 +8,6 @@ import {
 } from "../utils/firebaseUtils";
 import {spacePath, userPath} from "../constants/firebasePath.constants";
 import {MESSAGE} from "../constants/responseMessage.constants";
-import {auth} from "firebase-admin";
 import {SpaceType} from "../types/space.types";
 import {DEFAULT_SPACE_NAME} from "../constants/spaces.constants";
 import {getCreatedBy} from "../utils/comman";
@@ -16,7 +15,10 @@ import {generateSuccessResponse} from "../utils/successHandler";
 
 const createUserController = async (req: Request, res: Response) => {
   try {
-    const {data: {name="", email="", avatar="", isVerified=false} = {}, userId=""} = req.body;
+    const {
+      data: {name = "", email = "", avatar = "", isVerified = false} = {},
+      userId = "",
+    } = req.body;
 
     // if user exist throw error
     const user = await readDocument(userPath(userId));
@@ -28,14 +30,12 @@ const createUserController = async (req: Request, res: Response) => {
     }
 
     // create user data
-    const providerData = (await auth().getUser(userId)).providerData;
     const data = {
       id: userId,
       name: name,
       email: email,
       avatar: avatar,
       isVerified: isVerified,
-      providerData: providerData,
     };
 
     // save data in firebase
@@ -106,7 +106,7 @@ const deleteUserController = async (req: Request, res: Response) => {
 
 const onBoardingDetailController = async (req: Request, res: Response) => {
   try {
-    const {data: {spaceType=""} = {}, userId=""} = req.body;
+    const {data: {spaceType = ""} = {}, userId = ""} = req.body;
 
     // check for userId and spaceType
     if (

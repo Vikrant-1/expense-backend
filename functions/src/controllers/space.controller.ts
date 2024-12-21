@@ -19,7 +19,10 @@ import {generateSuccessResponse} from "../utils/successHandler";
 
 const createSpaceController = async (req: Request, res: Response) => {
   try {
-    const {data: {name="", spaceType=SpaceType.PERSONAL, avatar=""} = {}, userId} = req.body;
+    const {
+      data: {name = "", spaceType = SpaceType.PERSONAL, avatar = ""} = {},
+      userId,
+    } = req.body;
 
     if (!name || !spaceType || !avatar) {
       res
@@ -67,7 +70,10 @@ const createSpaceController = async (req: Request, res: Response) => {
 
 const updateSpaceController = async (req: Request, res: Response) => {
   try {
-    const {data: {name="", spaceType=SpaceType.PERSONAL, avatar=""} = {}, userId} = req.body;
+    const {
+      data: {name = "", spaceType = SpaceType.PERSONAL, avatar = ""} = {},
+      userId,
+    } = req.body;
     const {spaceId} = req.params;
 
     if (!name && !spaceType && !avatar) {
