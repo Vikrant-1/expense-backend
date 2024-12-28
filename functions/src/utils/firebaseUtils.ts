@@ -75,4 +75,18 @@ export const readCollection = async (collectionPath: string) => {
   }
 };
 
+
+export const docExists = async (path: string) => {
+  try {
+    const docRef = db.doc(path);
+    const doc = await docRef.get();
+    return doc.exists;
+  } catch (error) {
+    console.error("Error checking document existence:", error);
+    throw error;
+  }
+}
+
 export const getSpaceId = () => db.collection("spaces").id;
+
+export const getExpenseId = () => db.collection("expenses").id;

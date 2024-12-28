@@ -1,9 +1,9 @@
-interface CreatedBy {
+export interface CreatedBy {
   id: string;
   createdAt?: number;
 }
 
-interface UpdatedBy {
+export interface UpdatedBy {
   id: string;
   updatedAt?: number;
 }

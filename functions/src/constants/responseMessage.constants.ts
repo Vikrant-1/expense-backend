@@ -18,4 +18,19 @@ export const MESSAGE = {
   SPACE_CREATED: "Space created successfully.",
   SPACE_UPDATED: "Space updated successfully.",
   SPACE_CREATION_FAILED: "Failed to create space.",
+  SPACE_UPDATE_FAILED: "Failed to update space.",
+  SPACE_DELETED: "Space deleted successfully.",
+  SPACE_NOT_FOUND: "Space not found.",
+  SPACE_DELETION_FAILED: "Failed to delete space.",
+  SPACE_ALREADY_EXIST: "Space already exists.",
+
+  // expense
+  EXPENSE_CREATED: "Expense created successfully.",
+  EXPENSE_UPDATED: "Expense updated successfully.",
+  EXPENSE_DELETED: "Expense deleted successfully.",
+  EXPENSE_NOT_FOUND: "Expense not found.",
+  EXPENSE_CREATION_FAILED: "Failed to create expense.",
+  EXPENSE_UPDATE_FAILED: "Failed to update expense.",
+  EXPENSE_DELETE_FAILED: "Failed to delete expense.",
+  EXPENSE_FETCHED: "Expense fetched successfully.",
 };
