@@ -29,7 +29,6 @@ const createExpenseController = async (req: Request, res: Response) => {
       description: data.description,
       categoryId: data.categoryId,
       expenseDate: data.expenseDate,
-      spaceId: spaceId,
       createdBy: getCreatedBy(userId, true),
     };
 

@@ -8,7 +8,8 @@ interface ExpenseInterface {
     description: string;
     categoryId: string;
     expenseDate: number;
-    spaceId: string;
+    splitId?: string;
+    groupId?: string;
     createdBy: CreatedBy;
 }
 
